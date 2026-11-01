@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Qml Quick)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Qml Quick DBus Network)
 qt_standard_project_setup(REQUIRES 6.5)   # turns on AUTOMOC etc.
 
 # Lets qmlls find the module (generates .qmlls.ini)
@@ -23,6 +23,16 @@ qt_add_qml_module(iris
         src/core/Applications.cpp
         src/core/Cava.h
         src/core/Cava.cpp
+        src/core/Brightness.h
+        src/core/Brightness.cpp
+        src/core/Hud.h
+        src/core/Hud.cpp
+        src/core/WavyBar.h
+        src/core/WavyBar.cpp
+        src/core/Wallpapers.h
+        src/core/Wallpapers.cpp
+        src/core/SysInfo.h
+        src/core/SysInfo.cpp
 )
 
 target_include_directories(iris PRIVATE
@@ -35,6 +45,7 @@ target_link_libraries(iris PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::DBus
+    Qt6::Network
 )
 
 install(DIRECTORY ${CMAKE_BINARY_DIR}/Iris

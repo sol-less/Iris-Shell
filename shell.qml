@@ -2,6 +2,7 @@ import Iris
 import QtQuick
 import Quickshell
 import "components"
+import "components/wallpaper"
 
 ShellRoot {
     id: root
@@ -10,7 +11,14 @@ ShellRoot {
         Cava.configPath = "~/.config/quickshell/config/cava.json";
         Applications.excludeCategories = ["X-SuSE-YaST", "Screensaver"];
         Applications.excludeNames = ["YaST"];
-        console.log("exclude:", JSON.stringify(Applications.excludeCategories), JSON.stringify(Applications.excludeNames), "count:", Applications.count);
+        Wallpapers.folder = "~/.config/hypr/wallpapers"
+        Wallpapers.applyScript = `
+            ( command -v awww >/dev/null && awww img "$1" --transition-type grow \
+            || swww img "$1" --transition-type grow ) &
+            command -v matugen >/dev/null && matugen image "$1" --source-color-index 0 </dev/null
+            wait
+        `
+        console.log(Wallpapers.applyScript)
     }
 
     Variants {
@@ -26,5 +34,7 @@ ShellRoot {
         }
 
     }
+
+    WallpaperPicker {}
 
 }
