@@ -13,7 +13,7 @@ Item {
     property string icon: ""
     property string image: ""
 
-    readonly property string fontFamily: "Inter"
+    readonly property string fontFamily: Config.data.appearance.font
     readonly property real maxTextWidth: 330
 
     // plain, single-line text: no markup, no newlines

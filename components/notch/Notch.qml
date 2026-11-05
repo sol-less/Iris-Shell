@@ -1,4 +1,4 @@
-import "."
+import "../overlay"
 import Iris
 import QtQuick
 import QtQuick.Effects
@@ -34,14 +34,17 @@ PanelWindow {
         anchors.centerIn: parent
         height: 36
         width: notchPages.implicitWidth * (1 - overlay.progress) + overlay.implicitWidth * overlay.progress + 12
-        radius: 12
-        color: Theme.surface
         clip: true
+        radius: Config.data.notch.radius
+        color: Qt.alpha(Theme.surface, Config.data.notch.opacity)
 
         NotchPages {
             id: notchPages
 
             away: overlay.progress
+            loop: Config.data.notch.loop
+            swipeThreshold: Config.data.notch.swipeThreshold
+            dragRange: Config.data.notch.dragRange
         }
 
         OverlayHost {

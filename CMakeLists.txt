@@ -33,6 +33,8 @@ qt_add_qml_module(iris
         src/core/Wallpapers.cpp
         src/core/SysInfo.h
         src/core/SysInfo.cpp
+        src/core/Config.h
+        src/core/Config.cpp
 )
 
 target_include_directories(iris PRIVATE

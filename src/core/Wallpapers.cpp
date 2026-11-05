@@ -54,9 +54,7 @@ static QByteArray hyprRequest(const QByteArray &cmd) {
 Wallpapers::Wallpapers(QObject *parent) : QAbstractListModel(parent) {
   m_folder = QDir::homePath() + QStringLiteral("/Pictures/Wallpapers");
   // "$1" is the chosen image; edit to match your wallpaper tool
-  m_applyScript =
-      QStringLiteral("matugen image \"$1\" --source-color-index 0 </dev/null");
-
+  m_applyScript = QString();
   m_debounce.setSingleShot(true);
   m_debounce.setInterval(300);
   connect(&m_debounce, &QTimer::timeout, this, &Wallpapers::reload);
@@ -215,8 +213,9 @@ void Wallpapers::apply(const QString &path) {
   if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
     f.write(path.toUtf8());
 
-  QProcess::startDetached(
-      QStringLiteral("sh"),
-      {QStringLiteral("-c"), m_applyScript, QStringLiteral("sh"), path});
+  if (!m_applyScript.trimmed().isEmpty())
+    QProcess::startDetached(
+        QStringLiteral("sh"),
+        {QStringLiteral("-c"), m_applyScript, QStringLiteral("sh"), path});
   emit applied(path);
 }

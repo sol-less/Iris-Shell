@@ -15,7 +15,7 @@ Item {
 		id: textHandler
 		text: Qt.formatTime(sysClock.date, "hh:mm")
 		color: Theme.primary
-		font.family: "Inter"
+		font.family: Config.data.appearance.font
 		font.pixelSize: 16
 		font.weight: 600
 		anchors.centerIn: parent

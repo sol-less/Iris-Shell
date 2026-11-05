@@ -1,10 +1,13 @@
 import Iris
 import QtQuick
 import QtQuick.Layouts
-import "launcher"
-import "shell"
+import "pages"
+import "widgets"
 
 Item {
+    // swipe left: next (the last page wraps to the first)
+    // swipe right: previous (the first page wraps to the last)
+
     id: root
 
     property real away: 0
@@ -62,9 +65,6 @@ Item {
     }
 
     function dragEnd(dx) {
-        // swipe left: next (the last page wraps to the first)
-        // swipe right: previous (the first page wraps to the last)
-
         if (dx < -swipeThreshold)
             step(1);
         else if (dx > swipeThreshold)
@@ -102,13 +102,10 @@ Item {
         id: notchComp
 
         RowLayout {
-            StatusIndicators {
-            }
-
             ClockSwap {
             }
 
-            Cava {
+            CavaBars {
             }
 
         }
@@ -127,6 +124,8 @@ Item {
         id: launcherComp
 
         Launcher {
+            iconSize: Config.data.launcher.iconSize
+            maxStripWidth: Config.data.launcher.maxWidth
             onLaunched: root.go(0)
         }
 

@@ -8,8 +8,8 @@ import Quickshell.Widgets
 Scope {
     id: root
 
-    property int tileW: 150
-    property int tileH: 84
+    property int tileW: Config.data.wallpaper.tileWidth
+    property int tileH: Math.round(tileW * 0.56)
 
     property bool open: false
     property string monitor: ""
@@ -23,6 +23,7 @@ Scope {
     property real swap: 1           // 1 = tiles out, 0 = folded into the cursor
     property int dir: 1             // +1 next page, -1 previous page
     property real spin: 0           // rotation direction during the swap
+    property var theme: null
 
     onPageChanged: {
         if (page === shownPage) return
@@ -39,7 +40,7 @@ Scope {
     }
 
     property real progress: open ? 1 : 0
-    Behavior on progress { NumberAnimation { duration: 450; easing.type: Easing.OutCubic } }
+        Behavior on progress { NumberAnimation { duration: Config.data.wallpaper.animMs; easing.type: Easing.OutCubic } }
 
     function toggle() {
         if (open) { open = false; return }
@@ -59,7 +60,9 @@ Scope {
 
     function pick(path) {
         open = false
-        Wallpapers.apply(path)
+        Wallpapers.apply(path)                       // only remembers the current wallpaper now
+        if (theme && theme.online) theme.setImage(path)
+        else Quickshell.execDetached(["iris-theme", "image", path, "--source-color-index", "0"])   // daemon offline
     }
 
     function easeOutBack(t) {
@@ -143,7 +146,7 @@ Scope {
                         anchors.centerIn: parent
                         text: root.hovered !== "" ? root.hovered : (root.page + 1) + " / " + win.pages
                         color: Theme.onSurface
-                        font.family: "Inter"
+                        font.family: Config.data.appearance.font
                         font.pixelSize: 12
                         font.weight: Font.DemiBold
                     }

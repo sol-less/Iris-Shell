@@ -7,8 +7,8 @@ Item {
     id: root
 
     readonly property bool shown: Cava.available
-    readonly property real barWidth: 15
-    readonly property real barSpacing: 4
+    readonly property real barWidth: Config.data.cava.barWidth
+    readonly property real barSpacing: Config.data.cava.barSpacing
     readonly property real fullWidth: Cava.bars * barWidth + Math.max(0, Cava.bars - 1) * barSpacing
     property real progress: shown ? 1 : 0
 

@@ -1,0 +1,41 @@
+{
+    "appearance": {
+        "font": "Inter"
+    },
+    "apps": {
+        "excludeCategories": [
+            "X-SuSE-YaST",
+            "Screensaver"
+        ],
+        "excludeNames": [
+            "YaST"
+        ],
+        "includeHidden": false,
+        "includeTerminal": true
+    },
+    "cava": {
+        "bars": 8,
+        "onlyWhenPlaying": false
+    },
+    "notch": {
+        "dragRange": 300,
+        "loop": true,
+        "opacity": 1,
+        "radius": 12,
+        "shadow": 0.8,
+        "showBattery": true,
+        "showNetwork": true,
+        "swipeThreshold": 20
+    },
+    "notifications": {
+        "dnd": false
+    },
+    "osd": {
+        "squiggle": 0.6000000000000001
+    },
+    "wallpaper": {
+        "folder": "~/.config/hypr/wallpapers",
+        "perPage": 7,
+        "tileWidth": 140
+    }
+}

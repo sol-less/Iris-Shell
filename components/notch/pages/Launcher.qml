@@ -12,7 +12,7 @@ Item {
     property int spacing: 8
     property real maxStripWidth: 300      // the strip scrolls beyond this
     property string hovered: ""           // name of the app under the mouse
-    readonly property string fontFamily: "Inter"
+    readonly property string fontFamily: Config.data.appearance.font
 
     function iconSrc(icon) {
         if (icon.startsWith("/")) return "file://" + icon

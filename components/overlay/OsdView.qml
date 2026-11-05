@@ -1,7 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
-import Quickshell.Widgets
 import Iris
 
 Item {
@@ -11,17 +9,15 @@ Item {
     property real level: 0               // can exceed 1 (over 100% volume)
     property bool muted: false
 
-    property real squiggle: Hud.squiggle // 0 = straight line, 1 = very wavy
-    readonly property string fontFamily: "Inter"
-
+    property real squiggle: Hud.squiggle
+    readonly property string fontFamily: Config.data.appearance.font
     readonly property bool over: level > 1.0
 
-    readonly property string iconName: kind === "brightness"
-        ? "display-brightness-symbolic"
-        : (muted || level <= 0 ? "audio-volume-muted-symbolic"
-           : level < 0.34 ? "audio-volume-low-symbolic"
-           : level < 0.67 ? "audio-volume-medium-symbolic"
-           : "audio-volume-high-symbolic")
+    // one accent color for the icon, the wave and the handle
+    property color accent: muted ? Theme.outline
+                                    : (over ? Theme.error
+                                    : (kind === "brightness" ? Theme.tertiary : Theme.primary))
+    Behavior on accent { ColorAnimation { duration: 200 } }
 
     // smooth value changes
     property real shown: Math.min(1, level)
@@ -31,7 +27,7 @@ Item {
     property real flat: muted ? 0 : 1
     Behavior on flat { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
-    // pulse: the wave swells and speeds up for a moment when the value changes
+    // pulse: the wave swells, speeds up and the icon pops for a moment when the value changes
     property real boost: 0
     onLevelChanged: { boost = 1; boostAnim.restart() }
     onMutedChanged: { boost = 1; boostAnim.restart() }
@@ -54,10 +50,15 @@ Item {
         anchors.rightMargin: 12
         spacing: 10
 
-        IconImage {
-            implicitSize: 18
-            opacity: root.muted ? 0.6 : 1
-            source: Quickshell.iconPath(root.iconName, "image-missing")
+        OsdIcon {
+            Layout.preferredWidth: 18
+            Layout.preferredHeight: 18
+            Layout.alignment: Qt.AlignVCenter
+            kind: root.kind
+            level: root.level
+            muted: root.muted
+            color: root.accent
+            scale: 1 + 0.16 * root.boost
         }
 
         WavyBar {
@@ -72,11 +73,9 @@ Item {
             wavelength: 36 - 16 * root.squiggle
             amplitude: root.squiggle * 4.5 * root.flat * (1 + 0.35 * root.boost)
 
-            color: root.muted ? Theme.outline : (root.over ? Theme.error : Theme.primary)
-            handleColor: color
+            color: root.accent
+            handleColor: root.accent
             trackColor: Theme.surfaceContainerHighest
-
-            Behavior on color { ColorAnimation { duration: 200 } }
 
             // the travelling wave; runs only while the OSD is visible
             NumberAnimation on phase {

@@ -10,6 +10,7 @@ Item {
     property var current: null
 
     function showVolume() {
+        if (!Config.data.osd.volume) return
         const a = Pipewire.defaultAudioSink ? Pipewire.defaultAudioSink.audio : null;
         if (a)
             Hud.showOsd("volume", a.volume, a.muted);
@@ -24,8 +25,8 @@ Item {
         bodySupported: true
         imageSupported: true
         onNotification: (n) => {
-            n.tracked = true; // keeps it (and its image) alive while it's shown
-            // Hud ends the previous notification first (see onNotificationEnded below)
+            if (Config.data.notifications.dnd) return
+            n.tracked = true;
             Hud.showNotification(n.appName, n.summary, n.body, n.appIcon, n.image, n.urgency === NotificationUrgency.Critical);
             root.current = n;
         }
@@ -74,7 +75,7 @@ Item {
     // ----- brightness -----
     Connections {
         function onLevelChanged() {
-            Hud.showOsd("brightness", Brightness.level, false);
+            if (Config.data.osd.brightness) Hud.showOsd("brightness", Brightness.level, false)
         }
 
         target: Brightness

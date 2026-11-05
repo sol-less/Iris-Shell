@@ -1,6 +1,6 @@
 import Iris
 import QtQuick
-import "shell"
+import "."
 
 Item {
     id: root
@@ -17,7 +17,7 @@ Item {
     width: implicitWidth
     height: parent.height
 
-    Osd {
+    OsdView {
         id: osdView
 
         anchors.fill: parent
@@ -27,7 +27,7 @@ Item {
         muted: Hud.osdMuted
     }
 
-    Notification {
+    NotificationView {
         id: notifView
 
         anchors.fill: parent

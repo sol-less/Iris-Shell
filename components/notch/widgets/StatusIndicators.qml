@@ -8,7 +8,7 @@ RowLayout {
 
     property bool showNetwork: true
     property bool showBattery: true
-    readonly property string fontFamily: "Inter"
+    readonly property string fontFamily: Config.data.appearance.font
     readonly property bool expanded: hover.hovered
 
     spacing: 10
