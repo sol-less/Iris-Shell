@@ -12,7 +12,7 @@ cmake
 git
 quickshell-git
 hyprland
-iris-theme // see on github.com/sol-less/Iris-Theme
+iris-theme # see on github.com/sol-less/Iris-Theme
 Ninja
 qt6
 g++
