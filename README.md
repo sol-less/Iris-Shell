@@ -28,6 +28,7 @@ cava
 cd ~
 mkdir -p ~/.config/quickshell
 git clone https://github.com/sol-less/Iris-Shell ~/.config/quickshell
+cd ~/.config/quickshell
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 sudo cmake --install build
