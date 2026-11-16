@@ -39,3 +39,8 @@ Run `qs & disown` after building and installing the build.
 
 > [!IMPORTANT]
 > If you see the shell bugging with the small width, try to slide to the left first. If bug still persist, try to restart the shell.
+
+## Hall of Fame(s)
+### 2026
+- Most insertions in a single release: 9,992 lines
+  > Blossom 12 - Blossom 21
