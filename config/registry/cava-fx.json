@@ -1,0 +1,9 @@
+{
+  "id": "cava",
+  "groups": [ { "title": "Look", "items": [
+    { "key": "cava.style", "type": "choice", "default": "bars", "title": "Style",
+      "options": [ { "label": "Bars", "value": "bars" }, { "label": "Mirror", "value": "mirror" } ] },
+    { "key": "cava.peaks", "type": "toggle", "default": true, "title": "Falling peak dots" },
+    { "key": "cava.height", "type": "slider", "default": 22, "min": 10, "max": 30, "step": 1, "unit": " px", "title": "Height" }
+  ] } ]
+}

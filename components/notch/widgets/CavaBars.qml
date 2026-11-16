@@ -1,72 +1,36 @@
-import Iris
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
+import Iris
 
 Item {
     id: root
+    readonly property bool shown: Cava.available                    // a player is detected
+    readonly property real bw: Config.data.cava.barWidth
+    readonly property real sp: Config.data.cava.barSpacing
+    readonly property real fullW: Math.max(0, Cava.bars * (bw + sp) - sp)
 
-    readonly property bool shown: Cava.available
-    readonly property real barWidth: Config.data.cava.barWidth
-    readonly property real barSpacing: Config.data.cava.barSpacing
-    readonly property real fullWidth: Cava.bars * barWidth + Math.max(0, Cava.bars - 1) * barSpacing
-    property real progress: shown ? 1 : 0
-
+    implicitHeight: 36
     Layout.fillHeight: true
-    Layout.preferredWidth: fullWidth * progress
-    Layout.leftMargin: 8 * progress
-    visible: progress > 0
-    opacity: progress
+    Layout.preferredWidth: shown ? fullW + 6 : 0
+    Behavior on Layout.preferredWidth { Spring {} }
     clip: true
+    opacity: shown ? 1 : 0
+    visible: shown || Layout.preferredWidth > 0.5
+    Behavior on opacity { NumberAnimation { duration: 180 } }
 
-    Row {
-        width: root.fullWidth
-        height: parent.height
-        spacing: root.barSpacing
-
-        Repeater {
-            model: Cava.bars
-
-            delegate: Item {
-                id: bar
-
-                required property int index
-
-                width: root.barWidth
-                height: parent.height
-
-                Rectangle {
-                    width: parent.width
-                    height: Math.max(1, (Cava.values[bar.index] ?? 0) * (parent.height - 6))
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 3
-                    radius: 2
-                    color: Theme.primary
-
-                    Behavior on height {
-                        enabled: !Cava.running
-
-                        NumberAnimation {
-                            duration: 350
-                            easing.type: Easing.OutCubic
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-
+    Equalizer {
+        x: 3
+        anchors.verticalCenter: parent.verticalCenter
+        width: root.fullW
+        height: Config.data.cava.height
+        values: Cava.values
+        running: Cava.running && root.visible
+        barWidth: root.bw
+        spacing: root.sp
+        radius: 4
+        color: Theme.primary
+        colorTop: Theme.primary
+        mirror: Config.data.cava.style === "mirror"
+        peaks: Config.data.cava.peaks
     }
-
-    Behavior on progress {
-        NumberAnimation {
-            duration: 280
-            easing.type: Easing.OutCubic
-        }
-
-    }
-
 }

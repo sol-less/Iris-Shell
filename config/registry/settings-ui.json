@@ -1,0 +1,37 @@
+[
+  {
+    "id": "appearance",
+    "groups": [
+      {
+        "title": "Settings overlay",
+        "items": [
+          {
+            "key": "settings.effects",
+            "type": "choice",
+            "default": "full",
+            "title": "Shape effects",
+            "desc": "Full moves the shapes with your cursor, Reduced only morphs them, Off shows one flat shape",
+            "options": [
+              { "label": "Full", "value": "full" },
+              { "label": "Reduced", "value": "reduced" },
+              { "label": "Off", "value": "off" }
+            ]
+          },
+          { "key": "settings.names", "hidden": true, "default": {} }
+        ]
+      },
+      {
+        "title": "Iris Theme",
+        "items": [
+          {
+            "key": "theme.connect",
+            "type": "toggle",
+            "default": true,
+            "title": "Connect to the Iris Theme daemon",
+            "desc": "Turn this off if you do not run the daemon. The shell then stops trying to reach it."
+          }
+        ]
+      }
+    ]
+  }
+]

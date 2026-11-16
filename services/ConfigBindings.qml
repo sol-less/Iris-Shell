@@ -1,30 +1,56 @@
+import Iris
+import QtQml.Models
 import QtQuick
 import Quickshell
-import Iris
 
 Scope {
-    // OSD and notifications
-    Binding { target: Hud; property: "squiggle"; value: Config.data.osd.squiggle }
-    Binding { target: Hud; property: "osdMs"; value: Config.data.osd.ms }
-    Binding { target: Hud; property: "notificationMs"; value: Config.data.notifications.ms }
-    Binding { target: Hud; property: "criticalMs"; value: Config.data.notifications.criticalMs }
+    id: root
 
-    // apps
-    Binding { target: Applications; property: "includeHidden"; value: Config.data.apps.includeHidden }
-    Binding { target: Applications; property: "includeTerminal"; value: Config.data.apps.includeTerminal }
-    Binding { target: Applications; property: "excludeNames"; value: Config.data.apps.excludeNames }
-    Binding { target: Applications; property: "excludeCategories"; value: Config.data.apps.excludeCategories }
-    Binding {
-        target: Applications; property: "terminal"; value: Config.data.apps.terminal
-        when: Config.data.apps.terminal !== ""              // empty keeps $TERMINAL
+    readonly property var targets: ({
+        "Hud": Hud,
+        "Applications": Applications,
+        "Wallpapers": Wallpapers,
+        "Cava": Cava
+    })
+
+    function valueOf(key) {
+        let v = Config.data;
+        for (const part of key.split(".")) v = v === undefined || v === null ? undefined : v[part]
+        return v;
     }
 
-    // wallpapers
-    Binding { target: Wallpapers; property: "folder"; value: Config.data.wallpaper.folder }
+    Instantiator {
+        model: Config.bindings
 
-    // cava
-    Binding { target: Cava; property: "bars"; value: Config.data.cava.bars }
-    Binding { target: Cava; property: "framerate"; value: Config.data.cava.framerate }
-    Binding { target: Cava; property: "inputMethod"; value: Config.data.cava.inputMethod }
-    Binding { target: Cava; property: "onlyWhenPlaying"; value: Config.data.cava.onlyWhenPlaying }
+        delegate: Binding {
+            required property var modelData
+
+            target: root.targets[modelData.object] ?? null
+            property: modelData.property
+            value: root.valueOf(modelData.key)
+            when: root.targets[modelData.object] !== undefined && !(modelData.skipEmpty && root.valueOf(modelData.key) === "")
+        }
+
+    }
+
+    Connections {
+        function onDndChanged() {
+            Config.set("notifications.dnd", Hud.dnd);
+        }
+
+        target: Hud
+    }
+
+    Connections {
+        function onAppLaunched(appId) {
+            const u = Object.assign({
+            }, Config.data.launcher.usage ?? {
+            });
+            u[appId] = (u[appId] ?? 0) + 1;
+            Config.set("launcher.usage", u);
+        }
+
+        target: Applications
+    }
+
 }

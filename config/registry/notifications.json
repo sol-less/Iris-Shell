@@ -1,0 +1,17 @@
+{
+  "id": "osd",
+  "groups": [
+    { "title": "Notifications", "items": [
+      { "key": "notifications.pauseOnHover", "type": "toggle", "default": true, "title": "Pause while hovering", "desc": "The timer stops while the pointer is over a notification" },
+      { "key": "notifications.showActions", "type": "toggle", "default": true, "title": "Show action buttons", "desc": "Reply, Open and so on, when the app offers them" },
+      { "key": "notifications.maxQueue", "type": "slider", "default": 8, "min": 2, "max": 20, "step": 1, "title": "Queue size", "desc": "How many can wait their turn", "bind": "Hud.maxQueue" },
+      { "key": "notifications.historyMax", "type": "slider", "default": 50, "min": 10, "max": 200, "step": 10, "title": "History size", "bind": "Hud.historyMax" }
+    ] },
+    { "title": "Do not disturb", "items": [
+      { "key": "notifications.dndAllowCritical", "type": "toggle", "default": true, "title": "Let critical ones through", "bind": "Hud.dndAllowCritical" },
+      { "key": "notifications.quietEnabled", "type": "toggle", "default": false, "title": "Quiet hours", "desc": "Silences notifications on a schedule", "bind": "Hud.quietEnabled" },
+      { "key": "notifications.quietFrom", "type": "text", "default": "22:00", "placeholder": "22:00", "title": "Quiet from", "bind": "Hud.quietFrom" },
+      { "key": "notifications.quietTo", "type": "text", "default": "07:00", "placeholder": "07:00", "title": "Quiet until", "bind": "Hud.quietTo" }
+    ] }
+  ]
+}

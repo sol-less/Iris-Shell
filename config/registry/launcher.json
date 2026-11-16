@@ -1,0 +1,9 @@
+{
+  "id": "launcher",
+  "groups": [ { "title": "Order", "items": [
+    { "key": "launcher.sortByUse", "type": "toggle", "default": true, "title": "Most used first", "bind": "Applications.sortByUse" },
+    { "key": "launcher.pinned", "type": "tags", "default": [], "title": "Pinned",
+      "desc": "App ids that always come first, for example firefox", "bind": "Applications.pinned" },
+    { "key": "launcher.usage", "hidden": true, "default": {}, "bind": "Applications.usage" }
+  ] } ]
+}

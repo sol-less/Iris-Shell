@@ -1,0 +1,14 @@
+[
+  {
+    "id": "developer",
+    "name": "Developer options",
+    "sub": "Debugging tools",
+    "badge": "<>",
+    "order": 950,
+    "special": "developer",
+    "groups": [ { "title": "State", "items": [
+      { "key": "developer.enabled", "type": "toggle", "default": false, "hidden": true, "title": "Developer options" },
+      { "key": "developer.animScale", "type": "slider", "default": 1, "min": 0.25, "max": 3, "step": 0.05, "hidden": true, "title": "Animation speed" }
+    ] } ]
+  }
+]

@@ -1,97 +1,55 @@
-import "."
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Hyprland
+import Iris
 
 Item {
     id: root
 
-    property bool showWorkspaces: false
-    property int holdMs: 1500
-
-    function sizeOf(item) {
-        return Math.max(item.implicitWidth, item.childrenRect.width, item.width, 1);
-    }
+    property bool swapped: false                     // a workspace switch just happened
+    property int lastId: -1
+    property int dir: 1                              // +1: the workspaces come up from below, -1: from above
+    readonly property bool showWs: swapped || hover.hovered
 
     Layout.fillHeight: true
     implicitHeight: 36
-    implicitWidth: showWorkspaces ? sizeOf(workspaces) : sizeOf(clock)
     clip: true
-    Component.onCompleted: console.log("switcher sizes: clock", clock.implicitWidth, clock.width, "workspaces", workspaces.implicitWidth, workspaces.width, "heights", clock.height, workspaces.height)
 
-    Connections {
-        function onRawEvent(event) {
-            if (event.name === "workspace" || event.name === "workspacev2") {
-                console.log("switcher: workspace event", event.name, event.data);
-                root.showWorkspaces = true;
-                hideTimer.restart();
-            }
-        }
+    property real mix: showWs ? 1 : 0
+    Behavior on mix { Spring {} }
 
-        target: Hyprland
-    }
-
-    Timer {
-        id: hideTimer
-
-        interval: root.holdMs
-        onTriggered: root.showWorkspaces = false
-    }
+    implicitWidth: Math.max(1, Motion.lerp(clock.implicitWidth, ws.implicitWidth, mix))
 
     Clock {
         id: clock
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: root.showWorkspaces ? -height : (root.height - height) / 2
-        opacity: root.showWorkspaces ? 0 : 1
-
-        Behavior on y {
-            NumberAnimation {
-                duration: 260
-                easing.type: Easing.OutCubic
-            }
-
-        }
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 200
-            }
-
-        }
-
+        x: (root.width - width) / 2
+        y: (root.height - height) / 2 - root.dir * root.mix * root.height * 0.85
+        opacity: 1 - Motion.clamp01(root.mix * 1.4)
     }
-
     Workspace {
-        id: workspaces
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: root.showWorkspaces ? (root.height - height) / 2 : root.height
-        opacity: root.showWorkspaces ? 1 : 0
-
-        Behavior on y {
-            NumberAnimation {
-                duration: 260
-                easing.type: Easing.OutCubic
-            }
-
-        }
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 200
-            }
-
-        }
-
+        id: ws
+        x: (root.width - width) / 2
+        y: (root.height - height) / 2 + root.dir * (1 - root.mix) * root.height * 0.85
+        opacity: Motion.clamp01(root.mix * 1.4 - 0.2)
+        enabled: root.mix > 0.5
     }
 
-    Behavior on implicitWidth {
-        NumberAnimation {
-            duration: 260
-            easing.type: Easing.OutCubic
+    HoverHandler { id: hover }                       // hovering shows the workspaces so you can click them
+
+    Timer { id: hold; interval: Config.data.notch.workspaceHoldMs; onTriggered: root.swapped = false }
+
+    Component.onCompleted: lastId = Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : -1
+
+    Connections {
+        target: Hyprland
+        function onRawEvent(event) {
+            if (event.name !== "workspace" && event.name !== "workspacev2") return
+            const id = parseInt(String(event.data).split(",")[0])
+            if (isNaN(id)) return
+            if (root.lastId > 0) root.dir = id >= root.lastId ? 1 : -1
+            root.lastId = id
+            root.swapped = true
+            hold.restart()
         }
-
     }
-
 }

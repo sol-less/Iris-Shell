@@ -1,0 +1,42 @@
+{
+  "id": "deck", "name": "Deck", "sub": "The panel under the notch", "badge": "Q", "order": 45,
+  "groups": [
+    { "title": "Layout", "items": [
+      { "key": "deck.position", "type": "choice", "default": "notch", "title": "Position",
+        "options": [ { "label": "Under the notch", "value": "notch" }, { "label": "Centered", "value": "center" }, { "label": "Right side", "value": "right" } ] },
+      { "key": "deck.width", "type": "slider", "default": 1080, "min": 760, "max": 1500, "step": 20, "unit": " px", "title": "Width" },
+      { "key": "deck.unit", "type": "slider", "default": 56, "min": 44, "max": 84, "step": 2, "unit": " px", "title": "Row height", "desc": "The height of one grid row" },
+      { "key": "deck.gap", "type": "slider", "default": 12, "min": 4, "max": 28, "step": 1, "unit": " px", "title": "Spacing" }
+    ] },
+    { "title": "Style", "items": [
+      { "key": "deck.style", "type": "choice", "default": "solid", "title": "Card style",
+        "options": [ { "label": "Solid", "value": "solid" }, { "label": "Tonal", "value": "tonal" }, { "label": "Glass", "value": "glass" }, { "label": "Outline", "value": "outline" } ] },
+      { "key": "deck.radius", "type": "slider", "default": 30, "min": 8, "max": 44, "step": 1, "unit": " px", "title": "Corner radius" },
+      { "key": "deck.cardOpacity", "type": "slider", "default": 0.7, "min": 0.3, "max": 1, "step": 0.05, "title": "Glass opacity" },
+      { "key": "deck.shadow", "type": "toggle", "default": true, "title": "Shadow" }
+    ] },
+    { "title": "Behavior", "items": [
+      { "key": "deck.closeOnLaunch", "type": "toggle", "default": true, "title": "Close after launching an app" }
+    ] },
+    { "title": "Data", "items": [
+      { "key": "deck.note", "hidden": true, "default": "" },
+      { "key": "deck.scenes", "hidden": true, "default": [
+        { "name": "Focus", "dnd": true, "caffeine": true, "timer": 25 },
+        { "name": "Movie", "dnd": true, "caffeine": true, "volume": 60, "timer": 0 },
+        { "name": "Night", "dnd": true, "caffeine": false, "volume": 25 },
+        { "name": "Reset", "dnd": false, "caffeine": false, "timer": 0 }
+      ] },
+      { "key": "deck.pages", "hidden": true, "default": [
+        { "id": "home", "name": "Home", "widgets": [
+          { "type": "clock", "w": 4, "h": 2 }, { "type": "media", "w": 4, "h": 3 }, { "type": "calendar", "w": 4, "h": 5 },
+          { "type": "toggles", "w": 4, "h": 3 }, { "type": "sliders", "w": 4, "h": 2 }, { "type": "timer", "w": 4, "h": 2 },
+          { "type": "scenes", "w": 4, "h": 1 }, { "type": "stats", "w": 4, "h": 2 }, { "type": "power", "w": 4, "h": 1 } ] },
+        { "id": "inbox", "name": "Inbox", "widgets": [ { "type": "notifications", "w": 12, "h": 7 } ] },
+        { "id": "media", "name": "Media", "widgets": [
+          { "type": "media", "w": 7, "h": 4 }, { "type": "apps", "w": 5, "h": 6 }, { "type": "sliders", "w": 7, "h": 2 } ] },
+        { "id": "system", "name": "System", "widgets": [
+          { "type": "stats", "w": 6, "h": 5 }, { "type": "note", "w": 6, "h": 5 }, { "type": "power", "w": 12, "h": 1 } ] }
+      ] }
+    ] }
+  ]
+}

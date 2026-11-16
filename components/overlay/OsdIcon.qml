@@ -15,7 +15,6 @@ Item {
     implicitWidth: 18
     implicitHeight: 18
 
-    // ---------- speaker ----------
     Shape {
         visible: root.kind === "volume"
         anchors.fill: parent
@@ -62,7 +61,6 @@ Item {
         }
     }
 
-    // ---------- sun: the disc and the rays grow with the brightness ----------
     Item {
         visible: root.kind === "brightness"
         anchors.fill: parent

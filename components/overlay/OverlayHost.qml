@@ -1,19 +1,18 @@
 import Iris
 import QtQuick
-import "."
 
 Item {
     id: root
 
-    // 0 = hidden, 1 = fully shown
     property real progress: Hud.active ? 1 : 0
+    readonly property Item view: Hud.kind === "osd" ? osdView : Hud.kind === "toast" ? toastView : Hud.kind === "track" ? trackView : notifView
 
-    implicitWidth: Hud.kind === "osd" ? osdView.implicitWidth : notifView.implicitWidth
-    // placement inside the pill
+    implicitWidth: view.implicitWidth
+    implicitHeight: view.implicitHeight
     anchors.horizontalCenter: parent.horizontalCenter
-    y: (1 - progress) * parent.height // slides up from below
-    opacity: progress
-    visible: progress > 0
+    y: (1 - progress) * parent.height
+    opacity: Math.max(0, Math.min(1, progress))
+    visible: progress > 0.001
     width: implicitWidth
     height: parent.height
 
@@ -32,24 +31,25 @@ Item {
 
         anchors.fill: parent
         visible: Hud.kind === "notification"
-        app: Hud.app
-        summary: Hud.summary
-        body: Hud.body
-        icon: Hud.icon
-        image: Hud.image
     }
 
-    // click a notification to dismiss it
-    MouseArea {
+    ToastView {
+        id: toastView
+
         anchors.fill: parent
-        enabled: Hud.kind === "notification" && Hud.active
-        onClicked: Hud.hide()
+        visible: Hud.kind === "toast"
+        text: Hud.toast
+    }
+
+    TrackView {
+        id: trackView
+
+        anchors.fill: parent
+        visible: Hud.kind === "track"
     }
 
     Behavior on progress {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
+        Spring {
         }
 
     }

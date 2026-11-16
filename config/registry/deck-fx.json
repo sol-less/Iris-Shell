@@ -1,0 +1,9 @@
+{
+  "id": "deck",
+  "groups": [ { "title": "Motion", "items": [
+    { "key": "deck.bloom", "type": "toggle", "default": true, "title": "Grow out of the notch", "desc": "The Deck expands from the notch pill instead of fading in" },
+    { "key": "deck.pageSlide", "type": "toggle", "default": true, "title": "Slide between pages" },
+    { "key": "deck.hoverLift", "type": "toggle", "default": true, "title": "Lift cards on hover" },
+    { "key": "deck.stagger", "type": "slider", "default": 0.045, "min": 0.01, "max": 0.1, "step": 0.005, "title": "Cascade", "desc": "The delay between widgets when they come in" }
+  ] } ]
+}

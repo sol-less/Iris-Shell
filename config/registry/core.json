@@ -1,0 +1,126 @@
+[
+  { "id": "appearance", "name": "Appearance", "sub": "Colors and fonts", "badge": "A", "order": 10, "special": "appearance",
+    "shapes": ["Flower", "Cookie9Sided", "Circle"], "tone": "primary",
+    "groups": [ { "title": "Typography", "items": [
+      { "key": "appearance.font", "type": "text", "default": "Inter", "placeholder": "Inter", "title": "Font family", "desc": "Applies to the whole shell right away" }
+    ] } ] },
+
+  { "id": "notch", "name": "Notch", "sub": "The pill at the top", "badge": "N", "order": 20,
+    "groups": [
+      { "title": "Pages", "items": [
+        { "key": "notch.loop", "type": "toggle", "default": true, "title": "Loop pages", "desc": "Swiping past the last page wraps around to the first" },
+        { "key": "notch.swipeThreshold", "type": "slider", "default": 40, "min": 10, "max": 120, "step": 1, "unit": " px", "title": "Swipe distance", "desc": "How far to drag before the page switches" },
+        { "key": "notch.dragRange", "type": "slider", "default": 120, "min": 60, "max": 300, "step": 5, "unit": " px", "title": "Drag weight", "desc": "Larger feels heavier" }
+      ] },
+      { "title": "Look", "items": [
+        { "key": "notch.radius", "type": "slider", "default": 18, "min": 4, "max": 28, "step": 1, "unit": " px", "title": "Corner radius" },
+        { "key": "notch.shadow", "type": "slider", "default": 0.6, "min": 0, "max": 1, "step": 0.05, "title": "Shadow" },
+        { "key": "notch.opacity", "type": "slider", "default": 1.0, "min": 0.4, "max": 1, "step": 0.05, "title": "Opacity" }
+      ] },
+      { "title": "Clock", "items": [
+        { "key": "notch.clock24h", "type": "toggle", "default": true, "title": "24-hour clock" },
+        { "key": "notch.showSeconds", "type": "toggle", "default": false, "title": "Show seconds" }
+      ] },
+      { "title": "Indicators", "items": [
+        { "key": "notch.showNetwork", "type": "toggle", "default": true, "title": "Network indicator" },
+        { "key": "notch.showBattery", "type": "toggle", "default": true, "title": "Battery indicator" }
+      ] }
+    ] },
+
+  { "id": "launcher", "name": "Launcher & media", "sub": "Notch pages", "badge": "L", "order": 30,
+    "groups": [
+      { "title": "Launcher", "items": [
+        { "key": "launcher.iconSize", "type": "slider", "default": 22, "min": 16, "max": 40, "step": 1, "unit": " px", "title": "Icon size" },
+        { "key": "launcher.maxWidth", "type": "slider", "default": 300, "min": 160, "max": 600, "step": 10, "unit": " px", "title": "Strip width", "desc": "The icon strip scrolls beyond this" }
+      ] },
+      { "title": "Media", "items": [
+        { "key": "media.squiggle", "type": "slider", "default": 0.6, "min": 0, "max": 1, "step": 0.05, "title": "Progress squiggle", "desc": "0 is a straight line" }
+      ] }
+    ] },
+
+  { "id": "osd", "name": "OSD & notifications", "sub": "Pop-ins in the notch", "badge": "O", "order": 40,
+    "groups": [
+      { "title": "On-screen display", "items": [
+        { "key": "osd.volume", "type": "toggle", "default": true, "title": "Volume OSD" },
+        { "key": "osd.brightness", "type": "toggle", "default": true, "title": "Brightness OSD" },
+        { "key": "osd.ms", "type": "slider", "default": 1600, "min": 600, "max": 4000, "step": 100, "unit": " ms", "title": "Duration", "bind": "Hud.osdMs" },
+        { "key": "osd.squiggle", "type": "slider", "default": 0.6, "min": 0, "max": 1, "step": 0.05, "title": "Wave squiggle", "desc": "0 is a straight line, 1 is very wavy", "bind": "Hud.squiggle" },
+        { "key": "osd.squiggle", "type": "wave", "title": "Preview" }
+      ] },
+      { "title": "Notifications", "items": [
+        { "key": "notifications.dnd", "type": "toggle", "default": false, "title": "Do not disturb", "desc": "Silences notifications. Middle-click the notch to toggle it", "bind": "Hud.dnd" },
+        { "key": "notifications.ms", "type": "slider", "default": 4500, "min": 1500, "max": 12000, "step": 500, "unit": " ms", "title": "Duration", "bind": "Hud.notificationMs" },
+        { "key": "notifications.criticalMs", "type": "slider", "default": 8000, "min": 3000, "max": 30000, "step": 1000, "unit": " ms", "title": "Critical duration", "bind": "Hud.criticalMs" }
+      ] }
+    ] },
+
+  { "id": "apps", "name": "Apps", "sub": "What the launcher lists", "badge": "P", "order": 50,
+    "groups": [
+      { "title": "Visibility", "items": [
+        { "key": "apps.includeHidden", "type": "toggle", "default": false, "title": "Show hidden entries", "desc": "Helpers and apps meant for other desktops", "bind": "Applications.includeHidden" },
+        { "key": "apps.includeTerminal", "type": "toggle", "default": false, "title": "Show terminal apps", "desc": "TUI apps and terminal emulators", "bind": "Applications.includeTerminal" }
+      ] },
+      { "title": "Filters", "items": [
+        { "key": "apps.excludeNames", "type": "tags", "default": [], "title": "Hide by name", "desc": "Apps whose name contains one of these words", "bind": "Applications.excludeNames" },
+        { "key": "apps.excludeCategories", "type": "tags", "default": [], "title": "Hide by category", "desc": "For example X-SuSE-YaST or Screensaver", "bind": "Applications.excludeCategories" }
+      ] },
+      { "title": "Launching", "items": [
+        { "key": "apps.terminal", "type": "text", "default": "", "placeholder": "$TERMINAL", "title": "Terminal", "desc": "Used for terminal apps (empty uses $TERMINAL)", "bind": "Applications.terminal", "skipEmpty": true }
+      ] }
+    ] },
+
+  { "id": "wallpapers", "name": "Wallpapers", "sub": "The picker", "badge": "W", "order": 60,
+    "groups": [
+      { "title": "Library", "items": [
+        { "key": "wallpaper.folder", "type": "text", "default": "~/Pictures/Wallpapers", "title": "Folder", "desc": "Where the picker looks for images", "bind": "Wallpapers.folder" },
+        { "key": "wallpaper.perPage", "type": "slider", "default": 7, "min": 3, "max": 12, "step": 1, "title": "Wallpapers per page" }
+      ] },
+      { "title": "Picker", "items": [
+        { "key": "wallpaper.tileWidth", "type": "slider", "default": 150, "min": 100, "max": 260, "step": 5, "unit": " px", "title": "Tile size" },
+        { "key": "wallpaper.dim", "type": "slider", "default": 0.4, "min": 0, "max": 0.8, "step": 0.05, "title": "Background dim" },
+        { "key": "wallpaper.shaped", "type": "toggle", "default": true, "title": "Shaped tiles", "desc": "Wallpapers in cookie shapes. Turn off for plain rounded tiles" },
+        { "key": "wallpaper.preview", "type": "toggle", "default": true, "title": "Hover preview", "desc": "Shows the hovered wallpaper large behind the tiles" }
+      ] },
+      { "title": "Scrolling", "items": [
+        { "key": "wallpaper.naturalScroll", "type": "toggle", "default": false, "title": "Reverse scroll direction" },
+        { "key": "wallpaper.scrollSensitivity", "type": "slider", "default": 140, "min": 60, "max": 400, "step": 10, "title": "Touchpad distance", "desc": "How far a two-finger swipe must go to turn the page" }
+      ] }
+    ] },
+
+  { "id": "cava", "name": "Cava", "sub": "Audio visualizer", "badge": "C", "order": 70,
+    "groups": [
+      { "title": "Audio", "items": [
+        { "key": "cava.inputMethod", "type": "choice", "default": "", "title": "Audio input", "bind": "Cava.inputMethod",
+          "options": [ { "label": "Default", "value": "" }, { "label": "PipeWire", "value": "pipewire" },
+                       { "label": "PulseAudio", "value": "pulse" }, { "label": "ALSA", "value": "alsa" } ] },
+        { "key": "cava.onlyWhenPlaying", "type": "toggle", "default": true, "title": "Only while music plays", "bind": "Cava.onlyWhenPlaying" }
+      ] },
+      { "title": "Visualizer", "items": [
+        { "key": "cava.bars", "type": "slider", "default": 20, "min": 4, "max": 64, "step": 1, "title": "Bars", "bind": "Cava.bars" },
+        { "key": "cava.framerate", "type": "slider", "default": 60, "min": 15, "max": 144, "step": 1, "unit": " fps", "title": "Framerate", "bind": "Cava.framerate" },
+        { "key": "cava.barWidth", "type": "slider", "default": 15, "min": 2, "max": 24, "step": 1, "unit": " px", "title": "Bar width" },
+        { "key": "cava.barSpacing", "type": "slider", "default": 4, "min": 0, "max": 12, "step": 1, "unit": " px", "title": "Bar spacing" }
+      ] }
+    ] },
+
+  { "id": "lock", "name": "Lock screen", "sub": "Session lock", "badge": "K", "order": 80,
+    "groups": [
+      { "title": "Look", "items": [
+        { "key": "lock.blur", "type": "toggle", "default": true, "title": "Blur the wallpaper", "desc": "Turn this off on slow graphics" },
+        { "key": "lock.shapes", "type": "toggle", "default": true, "title": "Floating shapes" },
+        { "key": "lock.idleSleepMs", "type": "slider", "default": 15000, "min": 1000, "max": 60000, "step": 1000, "unit": " ms", "title": "Return to the clock after", "desc": "When nothing is typed" }
+      ] },
+      { "title": "Authentication", "items": [
+        { "key": "lock.pam", "type": "text", "default": "", "placeholder": "bundled password.conf", "title": "PAM service", "desc": "Empty uses the bundled file. If unlocking fails, try login" }
+      ] }
+    ] },
+
+  { "id": "motion", "name": "Motion", "sub": "How things move", "badge": "M", "order": 90,
+    "shapes": ["Sunny", "Burst", "Cookie6Sided"], "tone": "secondary",
+    "groups": [ { "title": "Springs", "items": [
+      { "key": "motion.spring", "type": "slider", "default": 3.2, "min": 1, "max": 6, "step": 0.1, "title": "Stiffness", "desc": "Higher snaps faster" },
+      { "key": "motion.damping", "type": "slider", "default": 0.32, "min": 0.1, "max": 0.9, "step": 0.02, "title": "Damping", "desc": "Lower bounces more" }
+    ] } ] },
+
+  { "id": "about", "name": "About", "sub": "Files and reset", "badge": "i", "order": 1000, "special": "about", "groups": [] }
+]

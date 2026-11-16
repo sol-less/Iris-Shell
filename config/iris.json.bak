@@ -1,0 +1,233 @@
+{
+    "appearance": {
+        "font": "Inter"
+    },
+    "apps": {
+        "excludeCategories": [
+            "X-SuSE-YaST",
+            "Screensaver"
+        ],
+        "excludeNames": [
+            "YaST"
+        ],
+        "includeHidden": false,
+        "includeTerminal": true,
+        "terminal": ""
+    },
+    "cava": {
+        "barSpacing": 4,
+        "barWidth": 15,
+        "bars": 8,
+        "framerate": 60,
+        "height": 10,
+        "inputMethod": "",
+        "onlyWhenPlaying": false,
+        "peaks": true,
+        "style": "mirror"
+    },
+    "deck": {
+        "bloom": true,
+        "hoverLift": true,
+        "note": "",
+        "pageSlide": true,
+        "pages": [
+            {
+                "id": "home",
+                "name": "Home",
+                "widgets": [
+                    {
+                        "h": 2,
+                        "type": "clock",
+                        "uid": "home:0:clock",
+                        "w": 4
+                    },
+                    {
+                        "h": 5,
+                        "type": "calendar",
+                        "uid": "home:2:calendar",
+                        "w": 4
+                    },
+                    {
+                        "h": 2,
+                        "type": "sliders",
+                        "uid": "home:4:sliders",
+                        "w": 4
+                    },
+                    {
+                        "h": 3,
+                        "type": "toggles",
+                        "uid": "home:3:toggles",
+                        "w": 4
+                    },
+                    {
+                        "h": 2,
+                        "type": "timer",
+                        "uid": "home:5:timer",
+                        "w": 4
+                    },
+                    {
+                        "h": 3,
+                        "type": "media",
+                        "uid": "home:1:media",
+                        "w": 4
+                    },
+                    {
+                        "h": 1,
+                        "type": "scenes",
+                        "uid": "home:6:scenes",
+                        "w": 4
+                    },
+                    {
+                        "h": 2,
+                        "type": "stats",
+                        "uid": "home:7:stats",
+                        "w": 4
+                    },
+                    {
+                        "h": 1,
+                        "type": "power",
+                        "uid": "home:8:power",
+                        "w": 4
+                    }
+                ]
+            },
+            {
+                "id": "inbox",
+                "name": "Notifications",
+                "widgets": [
+                    {
+                        "h": 7,
+                        "type": "notifications",
+                        "uid": "inbox:0:notifications",
+                        "w": 12
+                    }
+                ]
+            },
+            {
+                "id": "media",
+                "name": "Media",
+                "widgets": [
+                    {
+                        "h": 4,
+                        "type": "media",
+                        "uid": "media:0:media",
+                        "w": 7
+                    },
+                    {
+                        "h": 6,
+                        "type": "apps",
+                        "uid": "media:1:apps",
+                        "w": 5
+                    },
+                    {
+                        "h": 2,
+                        "type": "sliders",
+                        "uid": "sliders-mwezjq5f392",
+                        "w": 7
+                    }
+                ]
+            },
+            {
+                "id": "system",
+                "name": "System",
+                "widgets": [
+                    {
+                        "h": 5,
+                        "type": "stats",
+                        "uid": "system:0:stats",
+                        "w": 6
+                    },
+                    {
+                        "h": 5,
+                        "type": "note",
+                        "uid": "system:1:note",
+                        "w": 6
+                    },
+                    {
+                        "h": 1,
+                        "type": "power",
+                        "uid": "system:2:power",
+                        "w": 12
+                    }
+                ]
+            }
+        ],
+        "position": "center",
+        "style": "tonal",
+        "width": 1100
+    },
+    "developer": {
+        "animScale": 1,
+        "enabled": true
+    },
+    "launcher": {
+        "iconSize": 20,
+        "maxWidth": 400,
+        "pinned": [
+            "com.spotify.Client",
+            "firefox"
+        ],
+        "sortByUse": true
+    },
+    "lock": {
+        "blur": true,
+        "idleSleepMs": 1000,
+        "shapes": true
+    },
+    "media": {
+        "squiggle": 0.6000000000000001
+    },
+    "motion": {
+        "spring": 3
+    },
+    "notch": {
+        "clock24h": false,
+        "clockRoll": true,
+        "dragRange": 300,
+        "loop": true,
+        "opacity": 1,
+        "radius": 4,
+        "shadow": 0.8,
+        "showBattery": true,
+        "showNetwork": true,
+        "showSeconds": true,
+        "swipeThreshold": 20
+    },
+    "notifications": {
+        "dnd": false,
+        "quietEnabled": true,
+        "quietFrom": "11:00",
+        "quietTo": "12:00"
+    },
+    "osd": {
+        "brightness": true,
+        "ms": 1600,
+        "squiggle": 0.5,
+        "volume": true
+    },
+    "panel": {
+        "calendar": true,
+        "focusMinutes": 20,
+        "mediaCard": true
+    },
+    "settings": {
+        "effects": "off",
+        "names": {
+            "deck": "Deck"
+        }
+    },
+    "theme": {
+        "connect": true
+    },
+    "wallpaper": {
+        "animMs": 1000,
+        "dim": 0.5,
+        "folder": "~/.config/hypr/wallpapers",
+        "naturalScroll": false,
+        "perPage": 7,
+        "preview": true,
+        "scrollSensitivity": 270,
+        "shaped": true,
+        "tileWidth": 140
+    }
+}

@@ -34,7 +34,6 @@ ColumnLayout {
         }
     }
 
-    // ----- hero card -----
     Rectangle {
         Layout.fillWidth: true
         Layout.bottomMargin: 18
@@ -101,7 +100,6 @@ ColumnLayout {
         }
     }
 
-    // ----- daemon controls -----
     Cell {
         visible: root.ok
         first: true

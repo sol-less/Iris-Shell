@@ -1,0 +1,16 @@
+{
+  "id": "notch",
+  "groups": [
+    { "title": "Clock", "items": [
+      { "key": "notch.clockRoll", "type": "toggle", "default": true, "title": "Rolling digits", "desc": "Digits slide when they change" }
+    ] },
+    { "title": "Workspaces", "items": [
+      { "key": "notch.workspaceNumbers", "type": "toggle", "default": true, "title": "Number in the active workspace" },
+      { "key": "notch.workspaceHoldMs", "type": "slider", "default": 1500, "min": 500, "max": 4000, "step": 100, "unit": " ms", "title": "Show time after switching" }
+    ] },
+    { "title": "Indicators", "items": [
+      { "key": "notch.showCaffeine", "type": "toggle", "default": true, "title": "Caffeine indicator" },
+      { "key": "notch.showMic", "type": "toggle", "default": true, "title": "Microphone muted indicator" }
+    ] }
+  ]
+}

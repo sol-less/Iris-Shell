@@ -1,114 +1,77 @@
 import QtQuick
-import QtQuick.Layouts
-import Quickshell
-import Quickshell.Widgets
 import Iris
 
 Item {
     id: root
 
-    property string app: ""
-    property string summary: ""
-    property string body: ""
-    property string icon: ""
-    property string image: ""
+    readonly property real swap: Hud.noteSwap
 
-    readonly property string fontFamily: Config.data.appearance.font
-    readonly property real maxTextWidth: 330
+    implicitWidth: prevLayer.implicitWidth * (1 - swap) + curLayer.implicitWidth * swap
+    implicitHeight: prevLayer.implicitHeight * (1 - swap) + curLayer.implicitHeight * swap
 
-    // plain, single-line text: no markup, no newlines
-    function clean(s) {
-        return s.replace(/<[^>]*>/g, "")
-                .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
-                .replace(/&quot;/g, "\"").replace(/&#39;/g, "'").replace(/&amp;/g, "&")
-                .replace(/\s*\n\s*/g, " ")
-                .trim()
+    MouseArea { anchors.fill: parent; onClicked: Hud.hide() }          // click anywhere: dismiss
+
+    NotificationContent {
+        id: prevLayer
+        visible: root.swap < 0.999
+        y: (root.height - implicitHeight) / 2 - root.swap * 10
+        opacity: 1 - root.swap
+        app: Hud.prevApp
+        summary: Hud.prevSummary
+        body: Hud.prevBody
+        icon: Hud.prevIcon
+        image: Hud.prevImage
+        urgency: Hud.prevUrgency
+        actions: Hud.prevActions
     }
 
-    readonly property string titleText: clean(summary !== "" ? summary : app)
-    readonly property string bodyText: clean(body)
-
-    // "" means: no usable icon, so show the letter badge
-    readonly property string iconSource: {
-        if (image !== "") return image
-        if (icon.startsWith("/")) return "file://" + icon
-        if (icon !== "") return Quickshell.iconPath(icon, true)   // "" if the theme has no such icon
-        return ""
+    NotificationContent {
+        id: curLayer
+        y: (root.height - implicitHeight) / 2 + (1 - root.swap) * 14
+        opacity: root.swap
+        interactive: true
+        app: Hud.app
+        summary: Hud.summary
+        body: Hud.body
+        icon: Hud.icon
+        image: Hud.image
+        urgency: Hud.urgency
+        actions: Hud.actions
     }
 
-    implicitWidth: Math.min(400, row.implicitWidth + 24)
-    implicitHeight: 36
+    Rectangle {                                          // how many are waiting
+        visible: Hud.queued > 0
+        anchors.right: parent.right
+        anchors.rightMargin: 14
+        y: 10
+        implicitWidth: queuedText.implicitWidth + 16
+        implicitHeight: 20
+        radius: 10
+        color: Theme.secondaryContainer
 
-    RowLayout {
-        id: row
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: 12
-        spacing: 10
-
-        IconImage {
-            visible: root.iconSource !== ""
-            implicitSize: 24
-            Layout.preferredWidth: 24
-            Layout.preferredHeight: 24
-            Layout.maximumWidth: 24
-            Layout.maximumHeight: 24
-            Layout.alignment: Qt.AlignVCenter
-            source: root.iconSource
+        Text {
+            id: queuedText
+            anchors.centerIn: parent
+            text: "+" + Hud.queued
+            color: Theme.onSecondaryContainer
+            font.family: Config.data.appearance.font
+            font.pixelSize: 11
+            font.weight: Font.DemiBold
         }
+    }
 
-        // fallback when there is no icon
-        Rectangle {
-            visible: root.iconSource === ""
-            Layout.preferredWidth: 24
-            Layout.preferredHeight: 24
-            Layout.alignment: Qt.AlignVCenter
-            radius: 8
-            color: Theme.primaryContainer
+    Rectangle {                                          // the time left; it freezes while hovering
+        x: 24
+        y: root.height - 7
+        width: Math.max(0, (root.width - 48) * Hud.noteProgress)
+        height: 3
+        radius: 1.5
+        color: Hud.urgency >= 2 ? Theme.error : Theme.primary
+        opacity: 0.8
+    }
 
-            Text {
-                anchors.centerIn: parent
-                text: (root.app !== "" ? root.app : root.titleText).charAt(0).toUpperCase()
-                color: Theme.onPrimaryContainer
-                font.family: root.fontFamily
-                font.pixelSize: 12
-                font.weight: Font.DemiBold
-            }
-        }
-
-        ColumnLayout {
-            Layout.alignment: Qt.AlignVCenter
-            spacing: 1
-
-            Text {
-                Layout.maximumWidth: root.maxTextWidth
-                text: root.titleText
-                textFormat: Text.PlainText
-                color: Theme.onSurface
-                font.family: root.fontFamily
-                font.pixelSize: 13
-                font.weight: Font.DemiBold
-                lineHeight: 15
-                lineHeightMode: Text.FixedHeight
-                maximumLineCount: 1
-                wrapMode: Text.NoWrap
-                elide: Text.ElideRight
-            }
-
-            Text {
-                visible: root.bodyText !== ""
-                Layout.maximumWidth: root.maxTextWidth
-                text: root.bodyText
-                textFormat: Text.PlainText
-                color: Theme.onSurfaceVariant
-                font.family: root.fontFamily
-                font.pixelSize: 11
-                lineHeight: 13
-                lineHeightMode: Text.FixedHeight
-                maximumLineCount: 1
-                wrapMode: Text.NoWrap
-                elide: Text.ElideRight
-            }
-        }
+    HoverHandler {
+        enabled: Config.data.notifications.pauseOnHover
+        onHoveredChanged: Hud.pauseNotifications(hovered)
     }
 }

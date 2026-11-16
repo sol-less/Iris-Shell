@@ -6,22 +6,22 @@ GridLayout {
     id: root
     property string title: ""
     property string description: ""
-    property bool wide: false                         // the control goes under the text
+    property bool wide: false
     default property alias control: slot.data
 
     columns: wide ? 1 : 2
-    columnSpacing: 24
-    rowSpacing: 12
+    columnSpacing: 28
+    rowSpacing: 14
 
     ColumnLayout {
         Layout.fillWidth: true
-        spacing: 3
+        spacing: 4
         Text {
             text: root.title
             color: Theme.onSurface
             font.family: Config.data.appearance.font
-            font.pixelSize: 15
-            font.weight: Font.Medium
+            font.pixelSize: 16
+            font.weight: Font.DemiBold
         }
         Text {
             visible: root.description !== ""
@@ -29,7 +29,7 @@ GridLayout {
             text: root.description
             color: Theme.onSurfaceVariant
             font.family: Config.data.appearance.font
-            font.pixelSize: 12
+            font.pixelSize: 13
             wrapMode: Text.WordWrap
         }
     }

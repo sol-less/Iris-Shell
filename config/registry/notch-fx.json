@@ -1,0 +1,11 @@
+{
+  "id": "notch",
+  "groups": [ { "title": "Effects", "items": [
+    { "key": "notch.hoverGrow", "type": "toggle", "default": true, "title": "Grow on hover" },
+    { "key": "notch.jelly", "type": "toggle", "default": true, "title": "Squash and stretch", "desc": "The pill squashes a little while it changes width" },
+    { "key": "notch.glow", "type": "toggle", "default": true, "title": "Glow", "desc": "A soft glow that follows the music and the pop-ins" },
+    { "key": "notch.ripple", "type": "toggle", "default": true, "title": "Ripple on notifications" },
+    { "key": "notch.trackPeek", "type": "toggle", "default": true, "title": "Show the song when it changes" },
+    { "key": "notch.unreadBadge", "type": "toggle", "default": true, "title": "Unread badge" }
+  ] } ]
+}

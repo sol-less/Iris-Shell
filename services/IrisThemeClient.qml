@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Iris
 
 Scope {
     id: root
@@ -12,6 +13,8 @@ Scope {
     property bool autoMode: false
     property var templates: []
     property string lastError: ""
+    property int retryMs: 3000
+    readonly property bool enabled: Config.data.theme?.connect ?? true
     readonly property bool online: sock.connected
 
     function send(obj) {
@@ -38,10 +41,13 @@ Scope {
         lastError = st.error
     }
 
+    onEnabledChanged: sock.connected = enabled
+    Component.onCompleted: sock.connected = enabled
+
     Socket {
         id: sock
         path: Quickshell.env("XDG_RUNTIME_DIR") + "/iris-theme.sock"
-        connected: true
+        connected: false
 
         parser: SplitParser {
             onRead: (line) => {
@@ -54,14 +60,20 @@ Scope {
             }
         }
 
-        onConnectedChanged: if (connected) root.send({ cmd: "subscribe" })
+        onConnectedChanged: if (connected) {
+            root.retryMs = 3000
+            root.send({ cmd: "subscribe" })
+        }
     }
 
-    // reconnect if the daemon was not up yet or restarted
     Timer {
-        interval: 3000
+        interval: root.retryMs
         repeat: true
-        running: !sock.connected
-        onTriggered: { sock.connected = false; sock.connected = true }
+        running: root.enabled && !sock.connected
+        onTriggered: {
+            sock.connected = false
+            sock.connected = true
+            root.retryMs = Math.min(60000, root.retryMs * 2)
+        }
     }
 }

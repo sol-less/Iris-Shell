@@ -69,7 +69,8 @@ SettingRow {
             color: Theme.primary
             handleColor: Theme.primary
             trackColor: Theme.secondaryContainer
-            NumberAnimation on phase { from: 0; to: Math.PI * 2; duration: 1500; loops: Animation.Infinite; running: root.visible }
+            running: root.playing && root.visible
+            periodMs: 1500
         }
     }
 }
